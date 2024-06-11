@@ -1,21 +1,9 @@
-import { selectAuthError, selectAuthLoading } from "./auth/selectors";
-import {
-  selectContactsError,
-  selectContactsLoading,
-} from "./contacts/selectors";
+import { selectCampersError, selectCampersLoading } from "./campers/selectors";
 
 export function selectLoading(state) {
-  if (selectContactsLoading(state)) {
-    return selectContactsLoading(state);
-  } else {
-    return selectAuthLoading(state);
-  }
+  return selectCampersLoading(state);
 }
 
 export function selectError(state) {
-  if (selectContactsError(state)) {
-    return selectContactsError(state);
-  } else {
-    return selectAuthError(state);
-  }
+  return selectCampersError(state);
 }

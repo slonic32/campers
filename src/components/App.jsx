@@ -4,58 +4,29 @@ import { useSelector } from "react-redux";
 import { selectLoading, selectError } from "../redux/selectors.js";
 import Loader from "./Loader/Loader";
 import Error from "./Error/Error";
-import { refreshUser } from "../redux/auth/operations";
-import { useAuth } from "../hooks";
-import { Route, Routes, Navigate } from "react-router-dom";
-import RestrictedRoute from "../components/RestrictedRoute";
-import PrivateRoute from "../components/PrivateRoute";
 
-const Contacts = lazy(() => import("../pages/Contacts.jsx"));
-const Register = lazy(() => import("../pages/Register.jsx"));
-const Login = lazy(() => import("../pages/Login.jsx"));
+import { Route, Routes, Navigate } from "react-router-dom";
+
+const Home = lazy(() => import("../pages/Home.jsx"));
+const Catalog = lazy(() => import("../pages/Catalog.jsx"));
+const Favorites = lazy(() => import("../pages/Favorites.jsx"));
 import SharedLayout from "./SharedLayout/SharedLayout";
 
 export default function App() {
   const dispatch = useDispatch();
-  const { isRefreshing } = useAuth();
-
-  useEffect(() => {
-    dispatch(refreshUser());
-  }, [dispatch]);
 
   const loading = useSelector(selectLoading);
   const error = useSelector(selectError);
 
-  return isRefreshing ? (
-    <b>Refreshing user...</b>
-  ) : (
+  return (
     <div className="container">
       <Routes>
         <Route path="/" element={<SharedLayout />}>
-          <Route index element={<Navigate to="/contacts" />} />
-          <Route
-            path="/contacts"
-            element={
-              <PrivateRoute redirectTo="/login" component={<Contacts />} />
-            }
-          />
-          <Route
-            path="/register"
-            element={
-              <RestrictedRoute
-                redirectTo="/contacts"
-                component={<Register />}
-              />
-            }
-          />
-          <Route
-            path="/login"
-            element={
-              <RestrictedRoute redirectTo="/contacts" component={<Login />} />
-            }
-          />
+          <Route index element={<Home />} />
+          <Route path="/catalog" element={<Catalog />} />
+          <Route path="/favorites" element={<Favorites />} />
         </Route>
-        <Route path="*" element={<Navigate to="/contacts" />} />
+        <Route path="*" element={<Navigate to="/" />} />
       </Routes>
 
       {loading && <Loader />}
