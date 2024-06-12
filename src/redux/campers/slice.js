@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { fetchCampers, toggleFavorite } from "./operations";
+import { fetchCampers, perPage, toggleFavorite } from "./operations";
 
 function handlePending(state) {
   state.loading = true;
@@ -16,6 +16,20 @@ const campersSlice = createSlice({
     items: [],
     loading: false,
     error: null,
+    favorite: false,
+    page: 1,
+    more: true,
+  },
+  reducers: {
+    changeFavorite(state, action) {
+      state.favorite = action.payload;
+    },
+    changePage(state, action) {
+      state.page = action.payload;
+    },
+    changeMore(state, action) {
+      state.more = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -24,7 +38,15 @@ const campersSlice = createSlice({
       .addCase(fetchCampers.fulfilled, (state, action) => {
         state.loading = false;
         state.error = null;
-        state.items = action.payload;
+        if (state.page === 1) {
+          state.items = action.payload;
+          state.more = true;
+        } else {
+          state.items.push(...action.payload);
+        }
+        if (action.payload.length < perPage) {
+          state.more = false;
+        }
       })
       .addCase(fetchCampers.rejected, handleRejected)
       //toggle favorite
@@ -32,14 +54,26 @@ const campersSlice = createSlice({
       .addCase(toggleFavorite.fulfilled, (state, action) => {
         state.loading = false;
         state.error = null;
-        state.items = state.items.map((obj) =>
-          obj._id === action.payload._id
-            ? { ...obj, favorite: !obj.favorite }
-            : obj
-        );
+        if (state.favorite) {
+          const index = state.items.findIndex(
+            (obj) => obj._id === action.payload._id
+          );
+
+          if (index !== -1) {
+            state.items.splice(index, 1);
+          }
+        } else {
+          state.items = state.items.map((obj) =>
+            obj._id === action.payload._id
+              ? { ...obj, favorite: !obj.favorite }
+              : obj
+          );
+        }
       })
       .addCase(toggleFavorite.rejected, handleRejected);
   },
 });
 
 export const campersReducer = campersSlice.reducer;
+
+export const { changeFavorite, changePage, changeMore } = campersSlice.actions;

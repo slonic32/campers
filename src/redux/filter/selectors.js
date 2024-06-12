@@ -20,11 +20,3 @@ export function selectWc(state) {
 export function selectType(state) {
   return state.filters.type;
 }
-
-export function selectFavorite(state) {
-  return state.filters.favorite;
-}
-
-export function selectPage(state) {
-  return state.filters.page;
-}

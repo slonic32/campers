@@ -19,7 +19,7 @@ export default function App() {
   const error = useSelector(selectError);
 
   return (
-    <div className="container">
+    <div>
       <Routes>
         <Route path="/" element={<SharedLayout />}>
           <Route index element={<Home />} />
