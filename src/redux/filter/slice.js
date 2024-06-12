@@ -12,8 +12,6 @@ const filtersSlice = createSlice({
     tv: false,
     wc: false,
     type: "",
-    favorite: false,
-    page: 1,
   },
   reducers: {
     changeLocation(state, action) {
@@ -36,12 +34,6 @@ const filtersSlice = createSlice({
     },
     changeType(state, action) {
       state.type = action.payload;
-    },
-    changeFavorite(state, action) {
-      state.favorite = action.payload;
-    },
-    changePage(state, action) {
-      state.page = action.payload;
     },
   },
 });
@@ -67,5 +59,4 @@ export const {
   changeWc,
   changeType,
   changeFavorite,
-  changePage,
 } = filtersSlice.actions;

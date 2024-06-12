@@ -10,16 +10,16 @@ export default function SharedLayout() {
   return (
     <>
       <header className={css.header}>
-        <div className={css.container}>
+        <div className={css.containerH}>
           <div className={css.menu}>
             <NavLink to="/" className={css.headerLink}>
               Home
             </NavLink>
             <NavLink to="/catalog" className={css.headerLink}>
-              Campers
+              Catalog
             </NavLink>
             <NavLink to="/favorites" className={css.headerLink}>
-              My favorites
+              Favorite
             </NavLink>
           </div>
         </div>

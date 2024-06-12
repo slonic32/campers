@@ -9,3 +9,15 @@ export function selectCampersLoading(state) {
 export function selectCampersError(state) {
   return state.campers.error;
 }
+
+export function selectFavorite(state) {
+  return state.campers.favorite;
+}
+
+export function selectPage(state) {
+  return state.campers.page;
+}
+
+export function selectMore(state) {
+  return state.campers.more;
+}

@@ -28,13 +28,12 @@ img {
   max-width: 100%;
 }
 
-.container {
-  max-width: 1440px;
-  margin: auto;
-  padding: 0 64px;
-}
-
 label,
 input {
   display: block;
+}
+
+a:active,
+a.active {
+  color: #e44848;
 }
